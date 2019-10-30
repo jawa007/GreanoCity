@@ -1,0 +1,178 @@
+<form [formGroup] = "addListForm" (ngSubmit) = "onSubmit()">
+    <div class="dashboard-content">
+       <div class="row">
+          <div class="col-lg-12">
+             <div id="add-listing">
+                <!-- Section -->
+                <div class="add-listing-section mb-4">
+                   <!-- Headline -->
+                   <div class="add-listing-headline">
+                      <h3> Basic Informations</h3>
+                   </div>
+                   <!-- Title -->
+                   <div class="row with-forms">
+                      <div class="col-md-12">
+                         <div class="form-group">
+                            <input type="text" placeholder="Business Name" formControlName="businessName"  class="form-control form-control-alternative" required>
+                         </div>
+                      </div>
+                   </div>
+                   <!-- Row -->
+                   <div class="row with-forms">
+                      <!-- Status -->
+                      <div class="col-md-6">
+                         <select class="custom-select form-control-alternative mb-3" formControlName ="category" aria-placeholder="Category" required>
+                            <option label="blank">Select Category</option>
+                           <option *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
+                         </select>
+                      </div>
+                      <!-- Type -->
+                      <div class="col-md-6">
+                         <div class="form-group">
+                            <input type="text" placeholder="Keywords" formControlName ="keywords" class="form-control form-control-alternative" required>
+                         </div>
+                      </div>
+                   </div>
+                   <!-- Row / End -->
+                </div>
+                <!-- Section / End -->
+                <!-- Section -->
+                <div class="add-listing-section mb-4" formGroupName="location">
+                   <!-- Headline -->
+                   <div class="add-listing-headline">
+                      <h3> Location</h3>
+                   </div>
+                   <div class="submit-section">
+                      <!-- Row -->
+                      <div class="row with-forms">
+                        <!-- Address -->
+                         <div class="col-md-12">
+                            <div class="form-group">
+                               <input type="text" placeholder="e.g. 964 School Street" formControlName ="address"  class="form-control form-control-alternative" required>
+                            </div>
+                         </div>
+                         <!-- City -->
+                         <div class="col-md-6">
+                            <div class="form-group">
+                               <input type="text" placeholder="city" formControlName="city"  class="form-control form-control-alternative" >
+                            </div>
+                         </div>
+                         <!-- Zip-Code -->
+                         <div class="col-md-6">
+                            <div class="form-group">
+                               <input type="text" placeholder="Zip Code" formControlName="pincode" class="form-control form-control-alternative" >
+                            </div>
+                         </div>
+                      </div>
+                      <!-- Row / End -->
+                   </div>
+                </div>
+                <!-- Section / End -->
+                <!-- Section -->
+                <div class="add-listing-section mb-4">
+                      
+                   <!-- Dropzone -->
+                  <dropzone class="dropzone-container" [message]="'Click or drag images here to upload'" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"></dropzone>
+                </div>
+                <!-- Section / End -->
+                <!-- Section -->
+                
+
+<div class="add-listing-section mb-4">
+        <!-- Headline -->
+        <div class="add-listing-headline">
+           <h3> Details</h3>
+        </div>
+        <div class="form">
+           <textarea class="form-control form-control-alternative" placeholder="Description" formControlName="description"  id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <!-- Row / End -->
+     
+      <!-- Section / End -->
+      <!-- Row -->
+            <div class="row with-forms">
+                <!-- Phone -->
+                <div class="col-md-4">
+                    <input type="text" placeholder="Phone" formControlName="phone"  class="form-control form-control-alternative" required>
+                </div>
+                <!-- Website -->
+                <div class="col-md-4">
+                    <input type="text" placeholder="Website" formControlName="website" class="form-control form-control-alternative" >
+                </div>
+                <!-- Email Address -->
+                <div class="col-md-4">
+                    <input type="text" placeholder="E-mail" formControlName="email" class="form-control form-control-alternative" required>
+                </div>
+            </div>
+            <!-- Row / End -->
+            <!-- Row -->
+            <div class="row with-forms">
+                <!-- Phone -->
+                <div class="col-md-4">
+                    <h5 class="fb-input"><i class="fa fa-facebook-square"></i> Facebook <span>(optional)</span></h5>
+                    <input type="text" class="form-control form-control-alternative" placeholder="https://www.facebook.com/" formControlName="facebookUrl" >
+                </div>
+                <!-- Website -->
+                <div class="col-md-4">
+                    <h5 class="twitter-input"><i class="fa fa-twitter"></i> Twitter <span>(optional)</span></h5>
+                    <input type="text" class="form-control form-control-alternative" placeholder="https://www.twitter.com/" formControlName="twitterUrl" >
+                </div>
+            </div>
+            <!-- Checkboxes -->
+            <h5 class="margin-top-30 margin-bottom-10">Amenities <span>(optional)</span></h5>
+            <div class="checkboxes in-row margin-bottom-20">
+                <span *ngFor="let amenity of amenities; let i=index">
+                        <!-- <input id="check-{{amenity.name}}" type="checkbox" formControlName="check"> -->
+                        <input id="check-{{amenity.name}}" type="checkbox" [value]="amenity.id" (change)="onCheckChange($event)">
+                        <label for="check-{{amenity.name}}">{{amenity.name}}</label>
+                </span>
+            </div>
+            <!-- Checkboxes / End -->
+            </div>
+            <!-- Row / End -->
+            <!-- Section -->
+            <div class="add-listing-section mb-4">
+                    <!-- Headline -->
+                    <div class="add-listing-headline mb-0">
+                    <h3> Pricing</h3>
+                    <!-- Switcher -->
+                    <!-- <label class="switch"><input type="checkbox" checked><span class="slider round"></span></label> -->
+                    </div>
+                    <!-- Switcher ON-OFF Content -->
+                    <!-- <div class="switcher-content"> -->
+                    <div class="row" >
+                        <div class="col-md-12">
+                            <table id="pricing-list-container" >
+                                <tbody >
+                                <tr formArrayName="pricing" class="pricing-list-item pattern" *ngFor="let control of addListForm.get('pricing').controls; let i=index">
+                                <td [formGroupName]="i">
+                                    <div class="fm-input pricing-name"><input type="text" placeholder="Item" formControlName="item" class="form-control form-control-alternative" /></div>
+                                    <div class="fm-input pricing-ingredients"><input type="text" placeholder="Description" formControlName="description"  class="form-control form-control-alternative" /></div>
+                                    <div class="fm-input pricing-price"><input type="text" placeholder="Price" formControlName="price"  class="form-control form-control-alternative" /></div>
+                                </td>
+                                <td (click)="remove(i)" *ngIf = "i > 0"><i class="fa fa-trash fa-2x"></i></td>
+                                </tr>
+                               </tbody>
+                            </table>
+                           <div class="mt-3">  
+                                <a class="btn btn-primary mr-5" (click)="addPrice()">Add Item</a>
+                                <!-- <button (click)="addUser()" class="btn btn-primary mr-5">Add Price</button> -->
+                            </div>
+                        </div>
+                      </div>
+                    <!-- </div> -->
+                    <!-- Switcher ON-OFF Content / End -->
+                </div>  
+            <!-- Section / End -->
+                
+                 <button type="submit"  class="btn btn-danger" [disabled]="!addListForm.valid">Submit</button>
+            </div>
+          </div>
+          <!-- Copyrights -->
+          <div class="col-md-12">
+             <div class="copyrights">© 2019 DirectList. All Rights Reserved.</div>
+          </div>
+       </div>
+    </div>
+</form>
+    
